@@ -12,66 +12,59 @@ var secondsElapsed = 0;
 
 //question variables
 var i = 0;
-var questNum = 0;
+var score = 0;
 
-function answersOne(){
-    console.log("we are at question one")
-    var answers = ["boolean","var","string","alphebet soup"]
+var questions = ["What is a helpful to test your code?", "What does .forEach do?", "Which is NOT an input type?"]
 
-    answers.forEach(function(print, index){
-        button = document.createElement("BUTTON");
-        button.innerText = answers[index]
-        button.setAttribute("style","color:black; align-content:center; display: flex;flex-direction: column; align-items: center;")
-        document.body.appendChild(button)
+var answers = ["Console.log", "Replace for loops", "Alphebet soup"];
+
+var falseAnswersOne = ["addEventListener", "for loops", "clicking the same button over and over"];
+
+var falseAnswersTwo = ["Confuse you", "Magic", "Replace a while loop"];
+
+var falseAnswersThree = ["var", "boolean", "string"];
+
+//Questions and Answers
+function questionOne() {
+
+    falseAnswersOne.forEach(falseAnswer => {
+        //Gives each item in falseAnswers a button
+        var answerBtn = $(`<button class= "button" data-number=${falseAnswer}>` + falseAnswer + `</button>`);
+
+        $("#buttons").append(answerBtn);
     });
-        
-}
 
+    //Creates button for correct answer
+    var correctBtn = document.createElement("BUTTON");
+    correctBtn.innerHTML = answers[0];
+    $("#buttons").append(correctBtn);
 
+    //create click functions with if/else statements for highscores and next question
 
-function questionOne(){
-    var questOne = document.createElement("h2")
-    questOne.innerText = "Which is NOT an input type?"
-    questOne.setAttribute("style","color:black; text-align:center;")
-    document.body.appendChild(questOne);
-    answersOne();
-}
-
-
-
-function promptQuestion(){
-    
-    if (questNum == 0){
-        questionOne();
-    }
- }
+}; //end function
 
 
 
 
-
-
-
-
-//timer functions -- fix render
+//timer functions
 
 function getFormattedMinutes() {
-    
+
     var secondsLeft = totalSeconds - secondsElapsed;
-  
+
     var minutesLeft = Math.floor(secondsLeft / 60);
-  
+
     var formattedMinutes;
-  
+
     if (minutesLeft < 10) {
-      
-      formattedMinutes = 0 + minutesLeft;
+
+        formattedMinutes = 0 + minutesLeft;
     } else {
-      formattedMinutes = minutesLeft;
+        formattedMinutes = minutesLeft;
     }
-  
+
     return formattedMinutes;
-  }
+}
 
 function getFormattedSeconds() {
     var secondsLeft = (totalSeconds - secondsElapsed) % 60;
@@ -80,40 +73,41 @@ function getFormattedSeconds() {
 
     if (secondsLeft < 10) {
         formattedSeconds = 0 + secondsLeft;
-    } 
+    }
     else {
         formattedSeconds = secondsLeft;
     }
-    
+
     return formattedSeconds;
 }
 
-function printTime(){
+function printTime() {
 
     minutesDisplay.innerHTML = getFormattedMinutes();
     secondsDisplay.textContent = getFormattedSeconds();
 }
 
-function startTime(){
-    promptQuestion();
+function startTime() {
+    questionOne();
     printTime();
     start.setAttribute("style", "background-color: white; border-color: white;")
 
 
 
-    if (totalSeconds > 0){
-        interval = setInterval(function(){
+    if (totalSeconds > 0) {
+        interval = setInterval(function () {
             secondsElapsed++;
             printTime();
-           
+
         }, 1000);
     }
-    else{
+    else {
         alert("Oops, you ran out of time!")
     }
 }
 
 start.addEventListener("click", startTime);
+
 
 
 
